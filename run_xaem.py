@@ -73,7 +73,7 @@ def read_sampleinfo(args):
 
 
 def index_ref(step=1):
-    trascript = config.get('xaem','transcript_fa') if config.get('xaem','transcript_fa') else f'{bindir}/../ref/refseq_38/transcript.fa.gz'
+    trascript = config.get('xaem','transcript_fa') if config.get('xaem','transcript_fa') else f'{bindir}/ref/refseq_38/transcript.fa.gz'
     logging.warning(f'Parameter: transcript_fa  is {trascript}')
     cmd = ''
     outfa = f'{outdir}/ref/{os.path.basename(trascript).replace(".gz","")}'
@@ -123,7 +123,7 @@ def get_eqclass(df,step=2,TxIndexer_idx=None):
 
 
 def count_matrix(step=3):
-    x_matrix = config.get('xaem','x_matrix') if config.get('xaem','x_matrix') else f'{bindir}/../ref/refseq_38/X_matrix.RData'
+    x_matrix = config.get('xaem','x_matrix') if config.get('xaem','x_matrix') else f'{bindir}/ref/refseq_38/X_matrix.RData'
     logging.warning(f'Parameter: x_matrix is {x_matrix}')
     cmd = f"Rscript {xaem_dir}/R/Create_count_matrix.R workdir={outdir}/results core=8 design.matrix={x_matrix}\n"
     cmd += f"""Rscript {xaem_dir}/R/AEM_update_X_beta.R \\
