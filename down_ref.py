@@ -1,8 +1,9 @@
 
-#!/usr/bin/evn python
-import sys
+#!/usr/bin/env python
 import os
 import argparse
+import subprocess
+
 
 BASE_PATH = os.path.abspath(os.path.split(os.path.abspath(__file__))[0])
 DATA_PATH = os.path.join(BASE_PATH, "ref")
@@ -21,14 +22,20 @@ def gunzip_flag():
     return ''
 
 def download_transcript_db(data_path):
-    ncbi_ref_url = 'https://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/annotation/annotation_releases/110/GCF_000001405.40_refseq_38.p14/'
-    fi_name  = 'GCF_000001405.40_refseq_38.p14_rna.fna.gz'
+    ncbi_ref_url = 'https://ftp.ncbi.nlm.nih.gov/refseq/H_sapiens/annotation/annotation_releases/110/GCF_000001405.40_GRCh38.p14/'
+    fi_name  = 'GCF_000001405.40_GRCh38.p14_rna.fna.gz'
+
     url = ncbi_ref_url + fi_name
     cmd = (
         f'cd {data_path} && '
         f'wget  {url} -O transcript.fa.gz'
     )
-    os.system(cmd)
+    res = subprocess.run(cmd, shell=True)
+    if res.returncode == 0:
+        print(f"Success: success download {url}, and save at {data_path}/transcript.fa.gz")
+    else:
+        print(f"Error: fail download {url}, and delete at {data_path}/transcript.fa.gz")
+
 
 def args_parse():
     parser = argparse.ArgumentParser( usage='Download referece data for XAEM',
