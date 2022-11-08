@@ -245,7 +245,7 @@ else:
 for each in config['xaem']:
     logging.warning(f'Parameter: {each} is {config.get("xaem",each)}')
 
-xaem_dir = config.get('xaem','xaem_dir') if config.get('xaem','xaem_dir')  else f'{bindir}/../XAEM/XAEM-binary-0.1.1-cq' 
+xaem_dir = config.get('xaem','xaem_dir') if config.get('xaem','xaem_dir')  else f'{bindir}/XAEM/XAEM-binary-0.1.1-cq' 
 logging.warning(f'Parameter: xaem_dir is {xaem_dir}')
 
 status_fi = f'{shelldir}/JOB.Status'
