@@ -55,8 +55,9 @@ def args_parse():
 
 
 def checkfq(fqfile):
-    if not fqfile.endswith(('fq.gz','fq','fastq','fastq.gz')):
-        logging.error('This is an fq file')
+    suffixs = ('fq.gz','fq','fastq','fastq.gz','fa.gz','fa','fasta','fasta.gz')
+    if not fqfile.endswith(suffixs):
+        logging.error(f'This is an fq/fa file,suffix should be {";".join(suffixs)}')
 
 
 def read_sampleinfo(args):
