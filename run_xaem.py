@@ -289,7 +289,7 @@ else:
 
 
 ### step 2 eqclass, multiple batch to run jobs, each batch contains some jobs，
-thread_n = config.getint('xaem','eqclass_cpu')/2
+thread_n = int(config.getint('xaem','eqclass_cpu')/2)
 count = 1
 while not is_success(df_status,'eqclass') and count<=2:
     df_status_eqclass = df_status.query("name == 'eqclass'")
