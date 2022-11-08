@@ -42,7 +42,7 @@ def args_parse():
                          dest='force')     
     parser.add_argument('-o','--outdir',
                         dest='outdir', metavar='',
-                        default='./')
+                        default='./workdir')
     parser.add_argument('--xaem-dir',
                         dest='xaem_dir')
     parser.add_argument('--xaem-index',
@@ -57,7 +57,7 @@ def args_parse():
 def checkfq(fqfile):
     suffixs = ('fq.gz','fq','fastq','fastq.gz','fa.gz','fa','fasta','fasta.gz')
     if not fqfile.endswith(suffixs):
-        logging.error(f'This is an fq/fa file,suffix should be {";".join(suffixs)}')
+        logging.error(f'This is not an fq/fa file,suffix should be {";".join(suffixs)}')
 
 
 def read_sampleinfo(args):
