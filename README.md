@@ -6,24 +6,25 @@ python down_ref.py
 ```
 ### Preparation for input files
 
-If one sample with multiple source fqstaq files:
+#### one sample with one source fqstaq file:
+|#SampleName|LibraryName|Fastq1|Fastq2|
+| --- |--- |--- | --- |
+| sample2 | sample2 | \*1.fataq.gz | \*2.fataq.gz|
+
+#### one sample with multiple source fqstaq files:
 |#SampleName|LibraryName|Fastq1|Fastq2|
 | --- |--- |--- | --- |
 | sample1 | source_name1 | \*1.fataq.gz | \*2.fataq.gz|
 | sample1 | source_name2 | \*1.fataq.gz | \*2.fataq.gz|
 
-If one sample with one source fqstaq file:
-|#SampleName|LibraryName|Fastq1|Fastq2|
-| --- |--- |--- | --- |
-| sample2 | sample2 | \*1.fataq.gz | \*2.fataq.gz|
 
-If seqencing data with fasta file
+#### fasta file
 
 |#SampleName|LibraryName|Fasta|
 | --- |--- |--- |
 | sample3 | sample3 | \*.fasta.gz |
 
-Note: header columns for display only， is not necessary. Demo:./Example/infq.lst
+Note: header columns is not necessary，for display only. Demo file can be find here:./Example/infq.lst
 
 
 ### Perform XAEM 
