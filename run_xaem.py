@@ -1,16 +1,12 @@
 #!/usr/bin/env python
 
-from distutils import log
-from email import message
+import pandas as pd
 import os
-from socket import timeout
-from symtable import Class
 import sys
 import argparse
 import logging
 import datetime
 from time import asctime
-import pandas as pd
 import configparser
 import subprocess
 import threading
