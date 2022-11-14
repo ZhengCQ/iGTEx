@@ -4,8 +4,15 @@ This is the autopipeline for [XAEM](https://github.com/WenjiangDeng/XAEM). You a
 
 
 ### Installing
+
 ```
 git https://github.com/ZhengCQ/aXAEM.git
+```
+or 
+```
+wget https://github.com/ZhengCQ/aXAEM/archive/refs/tags/aXAEM_v1.0.0.zip
+unzip aXAEM_v1.0.0.zip
+ln -fs aXAEM_v1.0.0.zip aXAEM
 ```
 
 ### Download for the annotation reference
