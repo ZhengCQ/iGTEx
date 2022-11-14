@@ -28,6 +28,7 @@ sh run_example.sh
 ```
 
 ### run project
+#### creat your project directory
 ```
 mkdir -p /path/to/project
 cd /path/to/project
