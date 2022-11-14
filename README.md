@@ -10,9 +10,9 @@ git https://github.com/ZhengCQ/aXAEM.git
 ```
 or 
 ```
-wget https://github.com/ZhengCQ/aXAEM/archive/refs/tags/aXAEM_v1.0.0.zip
-unzip aXAEM_v1.0.0.zip
-ln -fs aXAEM_v1.0.0.zip aXAEM
+wget https://github.com/ZhengCQ/aXAEM/archive/refs/tags/v1.0.0_beta.zip
+unzip v1.0.0_beta.zip
+ln -fs aXAEM-1.0.0_beta aXAEM
 ```
 
 ### Download for the annotation reference
