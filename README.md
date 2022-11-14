@@ -1,46 +1,62 @@
-# sQTL_XAEM
+# aXAEM
+
+This is the autopipeline for [XAEM][1]. You also can find the detailed instructions from XAEM [website][2].
+[1]:https://github.com/WenjiangDeng/XAEM
+[2]:https://www.meb.ki.se/sites/biostatwiki/xaem
+
+
+### Installing
+```
+git https://github.com/ZhengCQ/aXAEM.git
+```
 
 ### Download for the annotation reference
 ```
+cd /path/to/aXAEM
 python down_ref.py
 ```
-### Preparation for input files
 
-#### one sample with one source fqstaq file:
-|#SampleName|LibraryName|Fastq1|Fastq2|
-| --- |--- |--- | --- |
-| sample2 | sample2 | \*1.fataq.gz | \*2.fataq.gz|
-
-#### one sample with multiple source fqstaq files:
-|#SampleName|LibraryName|Fastq1|Fastq2|
-| --- |--- |--- | --- |
-| sample1 | source_name1 | \*1.fataq.gz | \*2.fataq.gz|
-| sample1 | source_name2 | \*1.fataq.gz | \*2.fataq.gz|
-
-
-#### fasta file
-
-|#SampleName|LibraryName|Fasta|
-| --- |--- |--- |
-| sample3 | sample3 | \*.fasta.gz |
-
-Note: header columns is not necessary，for display only. Demo file can be find here:./Example/infq.lst
-
-
-### Perform XAEM 
-#### Default parameter
+### run example
 ```
-python run_xaem.py -i infq.lst
+cd /path/to/aXAEM/Example
+sh run_example.sh 
+or python /path/to/aXAEM/bin/run_xaem.py -i infastq_lst.tsv 
 ```
 
-#### Custom parameter
+### run project
 ```
-cp config.ini config_custom.ini
-python run_xaem.py -i infq.lst -c config_custom.ini
+mkdir -p /path/to/project
+cd /path/to/project
+```
+#### Preparation for input files
+Demo: /path/to/aXAEM/Example/infastq_lst.tsv
+```
+sample1 S0001   S0001_1.fg.gz   S0001_2.fg.gz
+sample1 S0002   S0002_1.fg.gz   S0002_2.fg.gz
+sample2 S0003   S0003_1.fg.gz   S0003_2.fg.gz
+sample2 S0004   S0004_1.fg.gz   S0004_2.fg.gz
+sample3 S0005   S0005_1.fg.gz   S0005_2.fg.gz
+sample3 S0006   S0006_1.fg.gz   S0006_2.fg.gz
+sample4 S0007   S0007_1.fg.gz   S0007_2.fg.gz
+sample5 S0008   S0008_1.fg.gz   S0008_2.fg.gz
+```
+#SampleName\tsource_name\tfastq read1\tfastq read2
+
+#### Perform XAEM 
+##### Default parameter
+```
+python /path/to/aXAEM/run_xaem.py -i infastq_lst.tsv
 ```
 
-#### target output directory
+##### Custom parameter
+```
+cp /path/to/aXAEM/config.ini config_custom.ini
+python run_xaem.py -i infastq_lst.tsv -c config_custom.ini
+```
+
+##### target output directory
 
 ```
-python run_xaem.py -i infq.lst -o our_anlysis_dir
+python run_xaem.py -i infastq_lst.tsv -o our_anlysis_dir
 ```
+
