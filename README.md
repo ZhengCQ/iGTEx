@@ -25,7 +25,6 @@ python down_ref.py
 ```
 cd /path/to/aXAEM/Example
 sh run_example.sh 
-or python /path/to/aXAEM/bin/run_xaem.py -i infastq_lst.tsv 
 ```
 
 ### run project
