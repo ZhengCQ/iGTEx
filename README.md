@@ -1,8 +1,6 @@
 # aXAEM
 
-This is the autopipeline for [XAEM][1]. You also can find the detailed instructions from XAEM [website][2].
-[1]:https://github.com/WenjiangDeng/XAEM
-[2]:https://www.meb.ki.se/sites/biostatwiki/xaem
+This is the autopipeline for [XAEM](https://github.com/WenjiangDeng/XAEM). You also can find the detailed instructions from XAEM [website](https://www.meb.ki.se/sites/biostatwiki/xaem).
 
 
 ### Installing
