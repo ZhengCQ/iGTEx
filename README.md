@@ -1,12 +1,10 @@
 # aXAEM
-
-This is the autopipeline for [XAEM](https://github.com/WenjiangDeng/XAEM). You also can find the detailed instructions from XAEM [website](https://www.meb.ki.se/sites/biostatwiki/xaem).
+This is an autopipeline to estimate isoforms for GTEx V8 using [XAEM](https://github.com/WenjiangDeng/XAEM). You also can find the detailed instructions from XAEM [website](https://www.meb.ki.se/sites/biostatwiki/xaem).
 
 ### Prerequisites
 ```
 R (recommended version >= 3.5.1)
 Python (recommended version >= 3.7)
-
 ```
 
 
@@ -29,7 +27,7 @@ install.packages("doParallel")
 
 #### python Dependencies
 ```
-pip instrall pandas
+pip install pandas
 ```
 
 ### Download for the annotation reference
