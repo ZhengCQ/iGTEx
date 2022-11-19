@@ -21,7 +21,6 @@ ln -fs aXAEM-1.0.0_beta aXAEM
 #### R Dependencies
 ```
 install.packages("foreach")
-install.packages("parallel")
 install.packages("doParallel")
 ```
 
