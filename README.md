@@ -2,9 +2,15 @@
 
 This is the autopipeline for [XAEM](https://github.com/WenjiangDeng/XAEM). You also can find the detailed instructions from XAEM [website](https://www.meb.ki.se/sites/biostatwiki/xaem).
 
+### Prerequisites
+```
+R (recommended version >= 3.5.1)
+Python (recommended version >= 3.7)
+
+```
+
 
 ### Installing
-
 ```
 git https://github.com/ZhengCQ/aXAEM.git
 ```
@@ -13,6 +19,17 @@ or
 wget https://github.com/ZhengCQ/aXAEM/archive/refs/tags/v1.0.0_beta.zip
 unzip v1.0.0_beta.zip
 ln -fs aXAEM-1.0.0_beta aXAEM
+```
+#### R Dependencies
+```
+install.packages("foreach")
+install.packages("parallel")
+install.packages("doParallel")
+```
+
+#### python Dependencies
+```
+pip instrall pandas
 ```
 
 ### Download for the annotation reference
