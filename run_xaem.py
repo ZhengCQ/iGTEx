@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-import pandas as pd
 import os
 import sys
 import argparse
@@ -11,6 +10,13 @@ import configparser
 import subprocess
 import threading
 import queue
+
+try:
+    import pandas as pd
+except ModuleNotFoundError:
+    print('package pandas not install, start install ...')
+    os.system('pip install pandas')
+    print('pandas install successul')
 
 
 def args_parse():

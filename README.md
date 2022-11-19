@@ -25,11 +25,6 @@ install.packages("parallel")
 install.packages("doParallel")
 ```
 
-#### python Dependencies
-```
-pip install pandas
-```
-
 ### Download for the annotation reference
 ```
 cd /path/to/aXAEM
