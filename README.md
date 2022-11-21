@@ -16,7 +16,7 @@ or
 ```
 wget https://github.com/ZhengCQ/iGTEx/archive/refs/tags/iGTEx_XAEM_v0.1.1.zip
 unzip iGTEx_XAEM_v0.1.1.zip
-ln -fs iGTEx_XAEM_v0.1.1 iGTEx_XAEM
+ln -fs iGTEx-iGTEx_XAEM_v0.1.1 iGTEx_XAEM
 ```
 #### R Dependencies
 ```
