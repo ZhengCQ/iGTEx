@@ -1,4 +1,4 @@
-# aXAEM
+# iGTEx_XAEM
 This is an autopipeline to estimate isoforms for GTEx V8 using [XAEM](https://github.com/WenjiangDeng/XAEM). You also can find the detailed instructions from XAEM [website](https://www.meb.ki.se/sites/biostatwiki/xaem).
 
 ### Prerequisites
@@ -10,13 +10,13 @@ Python (recommended version >= 3.7)
 
 ### Installing
 ```
-git https://github.com/ZhengCQ/aXAEM.git
+git https://github.com/ZhengCQ/iGTEx.git
 ```
 or 
 ```
-wget https://github.com/ZhengCQ/aXAEM/archive/refs/tags/v1.0.0_beta.zip
-unzip v1.0.0_beta.zip
-ln -fs aXAEM-1.0.0_beta aXAEM
+wget https://github.com/ZhengCQ/iGTEx/archive/refs/tags/iGTEx_XAEM_v0.1.1.zip
+unzip iGTEx_XAEM_v0.1.1.zip
+ln -fs iGTEx_XAEM_v0.1.1 iGTEx_XAEM
 ```
 #### R Dependencies
 ```
@@ -26,13 +26,13 @@ install.packages("doParallel")
 
 ### Download for the annotation reference
 ```
-cd /path/to/aXAEM
+cd /path/to/iGTEx_XAEM
 python down_ref.py
 ```
 
 ### run example
 ```
-cd /path/to/aXAEM/Example
+cd /path/to/iGTEx_XAEM/Example
 sh run_example.sh 
 ```
 
@@ -43,7 +43,7 @@ mkdir -p /path/to/project
 cd /path/to/project
 ```
 #### Preparation for input files
-Demo: /path/to/aXAEM/Example/infastq_lst.tsv
+Demo: /path/to/iGTEx_XAEM/Example/infastq_lst.tsv
 ```
 sample1 S0001   S0001_1.fg.gz   S0001_2.fg.gz
 sample1 S0002   S0002_1.fg.gz   S0002_2.fg.gz
@@ -59,12 +59,12 @@ sample5 S0008   S0008_1.fg.gz   S0008_2.fg.gz
 #### Perform XAEM 
 ##### Default parameter
 ```
-python /path/to/aXAEM/run_xaem.py -i infastq_lst.tsv
+python /path/to/iGTEx_XAEM/run_xaem.py -i infastq_lst.tsv
 ```
 
 ##### Custom parameter
 ```
-cp /path/to/aXAEM/config.ini config_custom.ini
+cp /path/to/iGTEx_XAEM/config.ini config_custom.ini
 python run_xaem.py -i infastq_lst.tsv -c config_custom.ini
 ```
 
