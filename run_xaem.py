@@ -37,7 +37,8 @@ def args_parse():
                         required=True,
                         help=('File for sample information, including '
                               "(sample name\\tdata source name\\tfq1\\tfq2)"))
-    parser.add_argument('-t','--transcript',metavar='',dest='transcript')                 
+    parser.add_argument('--ref',dest='ref',choices=('refseq_38','gencode_38'),
+                        help='reference transcript,default=refseq_38',default='refseq_38')
     parser.add_argument('-c','--config',metavar='',
                         dest='config')
     parser.add_argument('-f','--force',action='store_true',
@@ -76,7 +77,7 @@ def read_sampleinfo(args):
 
 
 def index_ref(step=1):
-    trascript = config.get('xaem','transcript_fa') if config.get('xaem','transcript_fa') else f'{bindir}/ref/refseq_38/transcript.fa.gz'
+    trascript = config.get('xaem','transcript_fa') if config.get('xaem','transcript_fa') else f'{bindir}/ref/{refdb}/transcript.fa.gz'
     logging.warning(f'Parameter: transcript_fa  is {trascript}')
     cmd = ''
     outfa = f'{outdir}/ref/{os.path.basename(trascript).replace(".gz","")}'
@@ -126,7 +127,7 @@ def get_eqclass(df,step=2,TxIndexer_idx=None):
 
 
 def count_matrix(step=3):
-    x_matrix = config.get('xaem','x_matrix') if config.get('xaem','x_matrix') else f'{bindir}/ref/refseq_38/X_matrix.RData'
+    x_matrix = config.get('xaem','x_matrix') if config.get('xaem','x_matrix') else f'{bindir}/ref/{refdb}/X_matrix.RData'
     logging.warning(f'Parameter: x_matrix is {x_matrix}')
     cmd = f"Rscript {xaem_dir}/R/Create_count_matrix.R workdir={outdir}/results core=8 design.matrix={x_matrix}\n"
     cmd += f"""Rscript {xaem_dir}/R/AEM_update_X_beta.R \\
@@ -226,6 +227,7 @@ logger = logging.getLogger()
 
 
 args = args_parse()
+refdb = args.ref
 df_sample = read_sampleinfo(args)
 bindir = os.path.split(os.path.realpath(sys.argv[0]))[0]
 outdir = os.path.abspath(args.outdir)
