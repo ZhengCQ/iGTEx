@@ -68,6 +68,10 @@ XAEM can be easily run with:
 ```
 python /path/to/iGTEx_XAEM/run_xaem.py -i /path/to/Tissue1/infastq_lst.tsv
 ```
+(Optional) To specify a particular reference with gencode hg38, use:
+```
+--ref gencode_38
+```
 (Optional) To specify a particular output directory, use:
 ```
 -o /path/to/Tissue1_output_directory
