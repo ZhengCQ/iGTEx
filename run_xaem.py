@@ -87,7 +87,7 @@ def index_ref(step=1):
         cmd += f'gunzip -c {trascript} >{outfa}\n'
     else:
         cmd += f'ln -fs  {trascript} {outfa}\n'
-    
+    cmd += f"sed -i \'s/|/ /\' {outfa}\n"
     cmd += f'{xaem_dir}/bin/TxIndexer -t {outfa} --out {index_dir} \n'
     outf = open(f'{shelldir}/Step{step}.index_fa.sh','w')
     outf.write(cmd)
