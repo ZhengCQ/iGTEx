@@ -80,7 +80,7 @@ def args_parse():
     parser.add_argument('-f', action="store_true", dest='force',
                         help='forces download even if the files exist')
 
-    parser.add_argument('--db',dest='db',choices=('refseq_38', 'refseq_37','gencode_38','gencode_37'),
+    parser.add_argument('-db', '--db',dest='db',choices=('refseq_38', 'refseq_37','gencode_38','gencode_37'),
                         help='reference transcript,default=refseq_38',default='refseq_38'
     
     )
@@ -102,7 +102,12 @@ xmatrix_url={
 args = args_parse()
 
 db = args.db
+
 is_force = args.force
+
+if not os.path.exists(f'{DATA_PATH}/{db}'):
+    os.mkdir(f'{DATA_PATH}/{db}')
+    
 
 print(f'Starting download {db} transcript fasta...')
 if args.force or not os.path.exists(get_transcript(db)) or check_integrity(get_transcript(db)) == -1:
