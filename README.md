@@ -36,6 +36,11 @@ cd /path/to/iGTEx_XAEM
 python down_ref.py
 ```
 
+(Optional) To down a particular reference with gencode hg38, use:
+```
+python down_ref.py -db gencode_38
+```
+
 ## Example
 An example is prepared in the project **Example** folder, executable as
 ```
