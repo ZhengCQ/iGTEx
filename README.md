@@ -56,7 +56,13 @@ mkdir -p /path/to/Tissue1
 cd /path/to/Tissue1
 ```
 #### Input files
-In `/path/to/Tissue1`, create a file `/path/to/Tissue1/infastq_lst.tsv` listing the FASTQ input files. The file is a tab-delimited text file with 4 columns: `Sample name`, `Source name`, `FASTQ file name for paired-end read 1`, and `FASTQ file name for paired-end read 2`. `Source name` indicates the batch or sequencing library of the sample, so that the same sample may correspond to more than one sources. A standard example, where each sample has only a single batch, is given as `/path/to/iGTEx_XAEM/Example/infastq_lst.tsv`:
+In `/path/to/Tissue1`, create a file `/path/to/Tissue1/infastq_lst.tsv` listing the FASTQ input files. The file is a tab-delimited text file with 4 columns: `Sample name`, `Source name`, `FASTQ file name for paired-end read 1`, and `FASTQ file name for paired-end read 2`. `Source name` indicates the batch or sequencing library of the sample, so that the same sample may correspond to more than one sources. A standard example, where each sample has only a single batch or multiple batches, is given as `/path/to/iGTEx_XAEM/Example/infastq_lst.tsv`:
+single batch
+```
+sample4 S0007   S0007_1.fg.gz   S0007_2.fg.gz
+sample5 S0008   S0008_1.fg.gz   S0008_2.fg.gz
+```
+multiple batches
 ```
 sample1 S0001   S0001_1.fg.gz   S0001_2.fg.gz
 sample1 S0002   S0002_1.fg.gz   S0002_2.fg.gz
@@ -64,9 +70,9 @@ sample2 S0003   S0003_1.fg.gz   S0003_2.fg.gz
 sample2 S0004   S0004_1.fg.gz   S0004_2.fg.gz
 sample3 S0005   S0005_1.fg.gz   S0005_2.fg.gz
 sample3 S0006   S0006_1.fg.gz   S0006_2.fg.gz
-sample4 S0007   S0007_1.fg.gz   S0007_2.fg.gz
-sample5 S0008   S0008_1.fg.gz   S0008_2.fg.gz
 ```
+
+
 
 #### Run XAEM 
 XAEM can be easily run with:
