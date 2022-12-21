@@ -132,7 +132,7 @@ if args.covariates:
     cov_fi = args.covariates
 else:
     if args.tissue:
-        cov_fi = f'{bindir}/data/covariates/GTEx_Analysis_v8_sQTL_covariates_forProject/{tissue}.v8.sqtl_covariates.txt'
+        cov_fi = f'{bindir}/data/covariates/GTEx_Analysis_v8_sQTL_covariates_forProject/{tissue}.v8.sqtl_covariates.txt.gz'
     else:
         sys.exit('covariates file missed,please set --covariates or set --tissue in GTEx_v8')
 
