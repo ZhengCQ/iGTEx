@@ -146,6 +146,9 @@ df_cov = pd.read_csv(cov_fi,sep='\t',index_col=0)
 
 
 res = CalIR(df_exp,df_anno,df_cov.T)
+res.df_pheo.index.name = 'IID'
+res.df_pheo['FID'] = res.df_pheo.index
+res.df_pheo = res.df_pheo.reset_index().set_index(['FID','IID'])
 res.df_pheo.to_csv(f'{outdir}/{prefix}_isoform_splice_ratio.tsv',sep='\t')
 
 
