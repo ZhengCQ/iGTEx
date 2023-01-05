@@ -1,6 +1,7 @@
 import argparse
 import os
 import pandas as pd
+
 import numpy as np
 import scipy.stats as stats
 import statsmodels.api as sm
@@ -29,8 +30,7 @@ def args_parse():
     parser.add_argument('--prefix',dest='prefix',
                         help='prefix name, recommnd tissue name')    
     parser.add_argument('-o','--outdir',
-                        dest='outdir', metavar='',
-                        default='./workdir')
+                        dest='outdir', metavar='')
     args = parser.parse_args()
     return args
 
@@ -41,16 +41,14 @@ class CalIR(object):
         self.df_exp = exp
         self.df_anno = anno
         self.df_cov = cov
-        
-        isoforms = list(df_exp.index)
-        covs = list(df_cov.index)
         self.main()
         
 
     def filtered(self):
         # 过滤掉在所有表达量值都为0的isoform
         noexp = ((self.df_exp == 0).sum(axis=1) == self.df_exp.shape[1])
-        print(f'There are {noexp.sum()} isoforms with 0 in all samples')
+        print(f'There are {noexp.sum()} isoforms are exclued due to expression equal to 0 in all samples')
+
         self.df_exp  = self.df_exp[~noexp]
 
         # 过滤掉一个基因一个isoform的情况
@@ -86,7 +84,7 @@ class CalIR(object):
         splice_rate = splice_rate.merge(covariates,
                                       left_index=True,
                                       right_index=True)
-        print(f'There are {splice_rate.shape[0]} samples left after combine covariates information')
+        print(f'There are {splice_rate.shape[0]} samples include after combine covariates information')
 
         #lm,y为isoform x Nsamples，x为covs x Nsamples
         resid_infos = [sm.OLS(np.array(splice_rate[i]), 
@@ -112,13 +110,21 @@ class CalIR(object):
 args = args_parse()
 
 bindir = os.path.split(os.path.realpath(sys.argv[0]))[0]
-outdir = os.path.abspath(args.outdir)
+
 refdb = args.ref
 isoform_fi = args.isoform
 tissue = args.tissue
 
+# out dir 
+if  args.outdir:
+    outdir = os.path.abspath(args.outdir)
+else:
+    outdir = os.path.abspath(os.path.dirname(isoform_fi))
+
+# make path
 for item in [outdir]:
     if not os.path.exists(item): os.mkdir(item)
+
 
 if args.prefix:
     prefix = args.prefix
@@ -138,6 +144,14 @@ else:
 
 
 #表达量数据 XAEM
+print(f'input isoform data: {isoform_fi}')
+
+if isoform_fi.endswith('RData'):
+    os.system(f'Rscript {bindir}/isoform_rdata2exp.R inRdata={isoform_fi}')
+    isoform_fi = isoform_fi.replace(".RData", "_tpm.tsv")
+    print(f'Trans isoforms data to: {isoform_fi}')
+
+
 df_exp = pd.read_csv(isoform_fi,sep='\t',index_col=0)
 #注释数据 来自gencode gtf
 df_anno = pd.read_csv(f'{bindir}/ref/{refdb}/transcript_gene_info.tsv.gz',sep='\t').set_index('transcript_id')
@@ -146,10 +160,13 @@ df_cov = pd.read_csv(cov_fi,sep='\t',index_col=0)
 
 
 res = CalIR(df_exp,df_anno,df_cov.T)
+
+res.df_pheo.index = ['-'.join(i.split('-')[0:2]) for i in res.df_pheo.index]
+
 res.df_pheo.index.name = 'IID'
-res.df_pheo['FID'] = res.df_pheo.index
-res.df_pheo = res.df_pheo.reset_index().set_index(['FID','IID'])
-res.df_pheo.to_csv(f'{outdir}/{prefix}_isoform_splice_ratio.tsv',sep='\t')
+outfi = f'{outdir}/{prefix}.isoform_splice_ratio.tsv'
+print(f'{prefix} output isoform splice ratio file is: {outfi}')
+res.df_pheo.to_csv(outfi,sep='\t')
 
 
 
