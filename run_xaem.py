@@ -38,7 +38,7 @@ def args_parse():
                         help=('File for sample information, including '
                               "(sample name\\tdata source name\\tfq1\\tfq2)"))
     parser.add_argument('--ref',dest='ref',choices=('refseq_38','gencode_38'),
-                        help='reference transcript,default=refseq_38',default='refseq_38')
+                        help='reference transcript,default=gencode_38',default='gencode_38')
     parser.add_argument('-c','--config',metavar='',
                         dest='config')
     parser.add_argument('-f','--force',action='store_true',

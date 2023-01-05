@@ -81,7 +81,7 @@ def args_parse():
                         help='forces download even if the files exist')
 
     parser.add_argument('-db', '--db',dest='db',choices=('refseq_38', 'refseq_37','gencode_38','gencode_37'),
-                        help='reference transcript,default=refseq_38',default='refseq_38'
+                        help='reference transcript,default=refseq_38',default='gencode_38'
     
     )
 
