@@ -105,7 +105,7 @@ def get_eqclass(df,step=2,TxIndexer_idx=None):
 
         if len(fq1_lst) == 1:
             cmd += f'ln -fs {fq1_lst[0]} {sample_fq1}\n'
-            cmd += f'ln -fs {fq1_lst[0]} {sample_fq2}\n'
+            cmd += f'ln -fs {fq2_lst[0]} {sample_fq2}\n'
         elif len(fq1_lst) > 1:
             cmd += f'zcat {" ".join(fq1_lst)} | gzip -cf > {sample_fq1} &\n'
             cmd += f'zcat {" ".join(fq2_lst)} | gzip -cf > {sample_fq2} &\n'
