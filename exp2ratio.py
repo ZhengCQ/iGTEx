@@ -21,16 +21,16 @@ def args_parse():
                         dest='isoform', metavar='',
                         required=True,
                         help=('isoform expression file'))
-    parser.add_argument('--ref',dest='ref',choices=('refseq_38','gencode_38'),
-                        help='reference transcript,default=refseq_38',default='refseq_38')
-    parser.add_argument('--tissue',dest='tissue',
-                        help='GTEx tissue name')
-    parser.add_argument('--covariates',dest='covariates',
+    parser.add_argument('--ref',dest='ref', choices=('refseq_38','gencode_38'),
+                        help='reference transcript,default=gencode_38', default='gencode_38')
+    parser.add_argument('--covariates', dest='covariates',
                          help='covariates file') 
     parser.add_argument('--prefix',dest='prefix',
-                        help='prefix name, recommnd tissue name')    
+                        help='prefix name, recommnd tissue name')   
     parser.add_argument('-o','--outdir',
                         dest='outdir', metavar='')
+    parser.add_argument('--tissue',dest='tissue',
+                        help='GTEx tissue name')
     args = parser.parse_args()
     return args
 
