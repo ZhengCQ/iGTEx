@@ -81,6 +81,7 @@ class CalIR(object):
         
         #合并，目的将两个表格数据按照样本对应，并去除不存在covs的样本
         print(f'There are {splice_rate.shape[0]} samples in expresstion matrix')
+        print(f'There are {covariates.shape[0]} samples in covariates matrix')
         splice_rate = splice_rate.merge(covariates,
                                       left_index=True,
                                       right_index=True)
