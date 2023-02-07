@@ -17,9 +17,9 @@ git https://github.com/ZhengCQ/iGTEx.git
 ```
 or 
 ```
-wget https://github.com/ZhengCQ/iGTEx/archive/refs/tags/iGTEx_XAEM_v0.1.1.zip
-unzip iGTEx_XAEM_v0.1.1.zip
-ln -fs iGTEx-iGTEx_XAEM_v0.1.1 iGTEx_XAEM
+wget https://github.com/ZhengCQ/iGTEx/archive/refs/tags/iGTEx_XAEM_v0.1.2.zip
+unzip iGTEx_XAEM_v0.1.2.zip
+ln -fs iGTEx-iGTEx_XAEM_v0.1.2 iGTEx_XAEM
 ```
 
 #### Step 2: Setup R dependencies
@@ -93,6 +93,7 @@ python /path/to/iGTEx_XAEM/run_xaem.py -i /path/to/Tissue1/infastq_lst.tsv
 -c /path/to/Tissue1_config.ini
 ```
 An example of the `config.ini` file can be found in `/path/to/iGTEx_XAEM/`.
+
 
 
 #### Calculate isoform ratio  
