@@ -168,20 +168,3 @@ res.df_pheo.index.name = 'IID'
 outfi = f'{outdir}/{prefix}.isoform_splice_ratio.tsv'
 print(f'{prefix} output isoform splice ratio file is: {outfi}')
 res.df_pheo.to_csv(outfi,sep='\t')
-
-
-
-
-
-
-
-    
-    
-    
-
-
-        
-
-
-
-
