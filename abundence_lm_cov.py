@@ -1,0 +1,141 @@
+import argparse
+import os
+import pandas as pd
+
+import numpy as np
+import scipy.stats as stats
+import statsmodels.api as sm
+
+import sys
+
+
+def args_parse():
+    parser = argparse.ArgumentParser( #prog=__file__,
+                                     usage='lm covriates isoform expression abundence for QTL',
+                                     description='',
+                                     formatter_class=argparse.RawTextHelpFormatter,
+                                     epilog='''
+
+         ''')
+    parser.add_argument('-i','--isoform',
+                        dest='isoform', metavar='',
+                        required=True,
+                        help=('isoform expression file'))
+    parser.add_argument('--ref',dest='ref', choices=('refseq_38','gencode_38'),
+                        help='reference transcript,default=gencode_38', default='gencode_38')
+    parser.add_argument('--covariates', dest='covariates',
+                         help='covariates file') 
+    parser.add_argument('--prefix',dest='prefix',
+                        help='prefix name, recommnd tissue name')   
+    parser.add_argument('-o','--outdir',
+                        dest='outdir', metavar='')
+    parser.add_argument('--tissue',dest='tissue',
+                        help='GTEx tissue name')
+    args = parser.parse_args()
+    return args
+
+
+
+class CallPhe(object):
+    def __init__(self, exp, cov):
+        self.df_exp = exp
+        self.df_cov = cov
+        self.main()
+
+    def zscore(self, x):
+        x = pd.Series(x)
+        return stats.norm.ppf((x.rank()-0.5)/(~pd.isnull(x)).sum())
+    
+    def lm_covariates(self,abuncence, covariates, isoforms=None,covs=None):
+        #abuncence矩阵sample,isoform
+        #covariates矩阵sample,covariate
+        #返回 表型矩阵sample,pheno
+        if not isoforms:
+            isoforms = list(abuncence.columns)
+        if not covs:
+            covs = list(covariates.columns)
+        
+        #合并，目的将两个表格数据按照样本对应，并去除不存在covs的样本
+        print(f'There are {abuncence.shape[0]} samples in expresstion matrix')
+        print(f'There are {covariates.shape[0]} samples in covariates matrix')
+        abuncence = abuncence.merge(covariates,
+                                      left_index=True,
+                                      right_index=True)
+        print(f'There are {abuncence.shape[0]} samples include after combine covariates information')
+
+        #lm,y为isoform x Nsamples，x为covs x Nsamples
+        resid_infos = [sm.OLS(np.array(abuncence[i]), 
+                        sm.add_constant(np.array(abuncence[covs]))).fit().resid 
+                 for i in isoforms]
+        
+        #resid_infos = [i for i in parallel_applymap(lambda y:sm.OLS(y, sm.add_constant(np.array(splice_rate[covs]))).fit().resid,
+        #                                              splice_rate[isoforms].T.values)]
+            
+        df_phe = pd.DataFrame(resid_infos,index=isoforms,columns=splice_rate.index).T
+        return df_phe
+        
+    
+    def main(self):
+        print('Satring zscore')
+        self.df_exp.loc[:,:] = [i for i in map(self.zscore, self.df_exp.values)]
+        print('Sarting lm ...')
+        self.df_pheo = self.lm_covariates(self.df_exp,self.df_cov)
+        print('Job finished')
+
+args = args_parse()
+
+bindir = os.path.split(os.path.realpath(sys.argv[0]))[0]
+
+refdb = args.ref
+isoform_fi = args.isoform
+tissue = args.tissue
+
+# out dir 
+if  args.outdir:
+    outdir = os.path.abspath(args.outdir)
+else:
+    outdir = os.path.abspath(os.path.dirname(isoform_fi))
+
+# make path
+for item in [outdir]:
+    if not os.path.exists(item): os.mkdir(item)
+
+
+if args.prefix:
+    prefix = args.prefix
+else:
+    if args.tissue:
+        prefix = tissue
+    else:
+        prefix = ''
+
+if args.covariates:
+    cov_fi = args.covariates
+else:
+    if args.tissue:
+        cov_fi = f'{bindir}/data/covariates/GTEx_Analysis_v8_sQTL_covariates_forProject/{tissue}.v8.sqtl_covariates.txt.gz'
+    else:
+        sys.exit('covariates file missed,please set --covariates or set --tissue in GTEx_v8')
+
+
+#表达量数据 XAEM
+print(f'input isoform data: {isoform_fi}')
+
+if isoform_fi.endswith('RData'):
+    os.system(f'Rscript {bindir}/isoform_rdata2exp.R inRdata={isoform_fi}')
+    isoform_fi = isoform_fi.replace(".RData", "_tpm.tsv")
+    print(f'Trans isoforms data to: {isoform_fi}')
+
+
+df_exp = pd.read_csv(isoform_fi,sep='\t',index_col=0)
+# covariates
+df_cov = pd.read_csv(cov_fi,sep='\t',index_col=0)
+
+
+res = CallPhe(df_exp,df_cov.T)
+res.df_pheo.index = ['-'.join(i.split('-')[0:2]) for i in res.df_pheo.index]
+
+res.df_pheo.index.name = 'IID'
+outfi = f'{outdir}/{prefix}.isoform_abundence.tsv'
+print(f'{prefix} output isoform abundence file is: {outfi}')
+res.df_pheo.to_csv(outfi,sep='\t')
