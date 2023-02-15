@@ -46,7 +46,7 @@ class CallPhe(object):
         x = pd.Series(x)
         return stats.norm.ppf((x.rank()-0.5)/(~pd.isnull(x)).sum())
     
-    def lm_covariates(self,abuncence, covariates, isoforms=None,covs=None):
+    def lm_covariates(self, abuncence, covariates, isoforms=None,covs=None):
         #abuncence矩阵sample,isoform
         #covariates矩阵sample,covariate
         #返回 表型矩阵sample,pheno
@@ -54,24 +54,25 @@ class CallPhe(object):
             isoforms = list(abuncence.columns)
         if not covs:
             covs = list(covariates.columns)
-        
         #合并，目的将两个表格数据按照样本对应，并去除不存在covs的样本
         print(f'There are {abuncence.shape[0]} samples in expresstion matrix')
         print(f'There are {covariates.shape[0]} samples in covariates matrix')
+
         abuncence = abuncence.merge(covariates,
                                       left_index=True,
                                       right_index=True)
+                                    
         print(f'There are {abuncence.shape[0]} samples include after combine covariates information')
-
         #lm,y为isoform x Nsamples，x为covs x Nsamples
         resid_infos = [sm.OLS(np.array(abuncence[i]), 
                         sm.add_constant(np.array(abuncence[covs]))).fit().resid 
                  for i in isoforms]
+
         
         #resid_infos = [i for i in parallel_applymap(lambda y:sm.OLS(y, sm.add_constant(np.array(splice_rate[covs]))).fit().resid,
         #                                              splice_rate[isoforms].T.values)]
-            
-        df_phe = pd.DataFrame(resid_infos,index=isoforms,columns=splice_rate.index).T
+
+        df_phe = pd.DataFrame(resid_infos,index=isoforms,columns=abuncence.index).T
         return df_phe
         
     
@@ -132,7 +133,7 @@ df_exp = pd.read_csv(isoform_fi,sep='\t',index_col=0)
 df_cov = pd.read_csv(cov_fi,sep='\t',index_col=0)
 
 
-res = CallPhe(df_exp,df_cov.T)
+res = CallPhe(df_exp.T,df_cov.T)
 res.df_pheo.index = ['-'.join(i.split('-')[0:2]) for i in res.df_pheo.index]
 
 res.df_pheo.index.name = 'IID'
