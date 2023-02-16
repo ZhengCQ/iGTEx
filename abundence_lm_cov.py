@@ -37,10 +37,28 @@ def args_parse():
 
 
 class CallPhe(object):
-    def __init__(self, exp, cov):
+    def __init__(self, exp, anno, cov):
         self.df_exp = exp
+        self.df_anno = anno
         self.df_cov = cov
         self.main()
+    
+    def filtered(self):
+        # 过滤掉在所有表达量值都为0的isoform
+        noexp = ((self.df_exp == 0).sum(axis=1) == self.df_exp.shape[1])
+        print(f'There are {noexp.sum()} isoforms are exclued due to expression equal to 0 in all samples')
+
+        self.df_exp  = self.df_exp[~noexp]
+
+        # 过滤掉一个基因一个isoform的情况
+        self.df_exp = self.df_anno[['gene_id']].merge(
+                                 self.df_exp,
+                                 left_index=True,
+                                 right_index=True)
+
+        muti_isf_gene = [idx for idx,val in self.df_exp.groupby('gene_id').size().items() if val>1]
+        self.df_exp = self.df_exp[self.df_exp['gene_id'].isin(muti_isf_gene)]
+        self.df_exp = self.df_exp.drop('gene_id',axis=1).T
 
     def zscore(self, x):
         x = pd.Series(x)
@@ -57,6 +75,9 @@ class CallPhe(object):
         #合并，目的将两个表格数据按照样本对应，并去除不存在covs的样本
         print(f'There are {abuncence.shape[0]} samples in expresstion matrix')
         print(f'There are {covariates.shape[0]} samples in covariates matrix')
+        print(abuncence.head())
+        print(covariates.head())
+
 
         abuncence = abuncence.merge(covariates,
                                       left_index=True,
@@ -77,6 +98,8 @@ class CallPhe(object):
         
     
     def main(self):
+        print('Starting filter ...')
+        self.filtered()
         print('Satring zscore')
         self.df_exp.loc[:,:] = [i for i in map(self.zscore, self.df_exp.values)]
         print('Sarting lm ...')
@@ -129,11 +152,13 @@ if isoform_fi.endswith('RData'):
 
 
 df_exp = pd.read_csv(isoform_fi,sep='\t',index_col=0)
+df_anno = pd.read_csv(f'{bindir}/ref/{refdb}/transcript_gene_info.tsv.gz',sep='\t').set_index('transcript_id')
+
 # covariates
 df_cov = pd.read_csv(cov_fi,sep='\t',index_col=0)
 
 
-res = CallPhe(df_exp.T,df_cov.T)
+res = CallPhe(df_exp,df_anno, df_cov.T)
 res.df_pheo.index = ['-'.join(i.split('-')[0:2]) for i in res.df_pheo.index]
 
 res.df_pheo.index.name = 'IID'
