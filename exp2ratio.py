@@ -21,7 +21,7 @@ def args_parse():
                         dest='isoform', metavar='',
                         required=True,
                         help=('isoform expression file'))
-    parser.add_argument('--ref',dest='ref', choices=('refseq_38','gencode_38'),
+    parser.add_argument('--ref',dest='ref', choices=('refseq_38','gencode_38','refseq_37'),
                         help='reference transcript,default=gencode_38', default='gencode_38')
     parser.add_argument('--covariates', dest='covariates',
                          help='covariates file') 
@@ -85,6 +85,7 @@ class CalIR(object):
         splice_rate = splice_rate.merge(covariates,
                                       left_index=True,
                                       right_index=True)
+                                      
         print(f'There are {splice_rate.shape[0]} samples include after combine covariates information')
 
         #lm,y为isoform x Nsamples，x为covs x Nsamples

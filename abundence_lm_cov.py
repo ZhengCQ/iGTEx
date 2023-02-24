@@ -21,7 +21,7 @@ def args_parse():
                         dest='isoform', metavar='',
                         required=True,
                         help=('isoform expression file'))
-    parser.add_argument('--ref',dest='ref', choices=('refseq_38','gencode_38'),
+    parser.add_argument('--ref',dest='ref', choices=('refseq_38','gencode_38','refseq_37'),
                         help='reference transcript,default=gencode_38', default='gencode_38')
     parser.add_argument('--covariates', dest='covariates',
                          help='covariates file') 
@@ -75,8 +75,6 @@ class CallPhe(object):
         #合并，目的将两个表格数据按照样本对应，并去除不存在covs的样本
         print(f'There are {abuncence.shape[0]} samples in expresstion matrix')
         print(f'There are {covariates.shape[0]} samples in covariates matrix')
-        print(abuncence.head())
-        print(covariates.head())
 
 
         abuncence = abuncence.merge(covariates,
