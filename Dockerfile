@@ -8,8 +8,8 @@ RUN \
     sed -i 's/security-cdn.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.list.d/debian.sources && \
     apt update && \
     apt install --no-install-recommends -y \
-    unzip zip default-jre locales \
-    r-base r-base-dev && \
+    r-base r-base-dev \
+    unzip zip default-jre locales && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # set chinese fonts
