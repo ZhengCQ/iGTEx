@@ -6,9 +6,10 @@ RUN \
     sed -i 's/deb.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.list.d/debian.sources && \
     sed -i 's/security.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.list.d/debian.sources && \
     sed -i 's/security-cdn.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.list.d/debian.sources && \
-    apt update && apt install -y \
-    r-base r-base-dev \
-    unzip zip default-jre locales && \
+    apt update && \
+    apt install --no-install-recommends -y \
+    unzip zip default-jre locales \
+    r-base r-base-dev && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # set chinese fonts
@@ -37,11 +38,9 @@ ADD . /app/
 WORKDIR /app
 
 RUN \
+    --mount=type=cache,mode=0755,target=/root/.cache/pip \
     python -m pip install --upgrade pip && \
     pip install -r requirements.txt
-
-# RUN R -e "install.packages('foreach', repos='http://cran.rstudio.com/')"
-# RUN R -e "install.packages('doParallel', repos='http://cran.rstudio.com/')"
 
 # 通过清华镜像源安装
 RUN R -e "install.packages('foreach', repos='https://mirrors.tuna.tsinghua.edu.cn/CRAN/')"
