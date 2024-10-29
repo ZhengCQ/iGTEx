@@ -1,0 +1,19 @@
+services:
+  service-aone-cervical-breast-report:
+    platform: linux/amd64
+    build: "./"
+    image: "ccr.ccs.tencentyun.com/zcqday/service-zcqday-igtex:${BUILD_NUMBER}"
+    volumes:
+      - ./:/app
+    # environment:
+      # RABBITMQ_CONNECTION_STRING: amqp://host.docker.internal:5672
+      # AWS_ACCESS_KEY_ID:
+      # AWS_SECRET_ACCESS_KEY:
+      # AWS_BUCKET:
+      # AWS_ENDPOINT:
+      # AWS_ENDPOINT_STYLE:
+      # AWS_CDN_URL_PREFIX:
+      # AWS_PUBLIC:
+    # depends_on:
+    #   service-aone-cervical-breast-api:
+    #     condition: service_started

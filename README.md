@@ -7,6 +7,13 @@ R (recommended version >= 3.5.1)
 Python (recommended version >= 3.7)
 ```
 
+## Development
+
+```bash
+export BUILD_NUMBER=`date +"%Y.%m.%d"`.1
+docker-compose up --build # 本地开发调试
+docker-compose build && docker-compose push # 推送镜像到腾讯云免费的个人镜像仓库中(需要先开通)
+```
 
 ## Installation
 

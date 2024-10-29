@@ -7,6 +7,7 @@ RUN \
     sed -i 's/security.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.list.d/debian.sources && \
     sed -i 's/security-cdn.debian.org/mirrors.tuna.tsinghua.edu.cn/' /etc/apt/sources.list.d/debian.sources && \
     apt update && apt install -y \
+    r-base r-base-dev \
     unzip zip default-jre locales
 
 # set chinese fonts
@@ -38,9 +39,14 @@ RUN \
     python -m pip install --upgrade pip && \
     pip install -r requirements.txt
 
-RUN R -e "install.packages('foreach', repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('doParallel', repos='http://cran.rstudio.com/')"
+# RUN R -e "install.packages('foreach', repos='http://cran.rstudio.com/')"
+# RUN R -e "install.packages('doParallel', repos='http://cran.rstudio.com/')"
+
+# 通过清华镜像源安装
+RUN R -e "install.packages('foreach', repos='https://mirrors.tuna.tsinghua.edu.cn/CRAN/')"
+RUN R -e "install.packages('doParallel', repos='https://mirrors.tuna.tsinghua.edu.cn/CRAN/')"
 
 # ENTRYPOINT ["python3", "app.py"]
 
-CMD bash
+RUN python down_ref.py
+CMD python run_xaem.py
