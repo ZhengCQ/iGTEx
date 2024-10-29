@@ -4,3 +4,4 @@ __pycache__
 .env
 report_out/
 *.log
+workdir/

@@ -5,6 +5,8 @@ services:
     image: "ccr.ccs.tencentyun.com/zcqday/service-zcqday-igtex:${BUILD_NUMBER}"
     volumes:
       - ./:/app
+    command: |
+      python run_xaem.py -i /app/Example/infastq_lst.tsv
     # environment:
       # RABBITMQ_CONNECTION_STRING: amqp://host.docker.internal:5672
       # AWS_ACCESS_KEY_ID:
