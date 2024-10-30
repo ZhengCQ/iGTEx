@@ -1,5 +1,5 @@
 services:
-  service-aone-cervical-breast-report:
+  service-zcqday-igtex:
     platform: linux/amd64
     build: "./"
     image: "ccr.ccs.tencentyun.com/zcqday/service-zcqday-igtex:${BUILD_NUMBER}"

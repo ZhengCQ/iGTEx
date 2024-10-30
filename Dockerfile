@@ -9,7 +9,7 @@ RUN \
     apt update && \
     apt install --no-install-recommends -y \
     r-base r-base-dev \
-    unzip zip default-jre locales && \
+    wget unzip zip default-jre locales && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # set chinese fonts
@@ -49,4 +49,5 @@ RUN R -e "install.packages('doParallel', repos='https://mirrors.tuna.tsinghua.ed
 # ENTRYPOINT ["python3", "app.py"]
 
 RUN python down_ref.py
-CMD python run_xaem.py
+# CMD python run_xaem.py
+CMD bash
