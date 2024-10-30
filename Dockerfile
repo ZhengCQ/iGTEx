@@ -48,6 +48,6 @@ RUN R -e "install.packages('doParallel', repos='https://mirrors.tuna.tsinghua.ed
 
 # ENTRYPOINT ["python3", "app.py"]
 
-RUN python down_ref.py
+# RUN python down_ref.py
 # CMD python run_xaem.py
 CMD bash
