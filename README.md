@@ -7,17 +7,18 @@ R (recommended version >= 3.5.1)
 Python (recommended version >= 3.7)
 ```
 
-## Development
-
-```bash
-export BUILD_NUMBER=`date +"%Y.%m.%d"`.1
-docker-compose up --build # 本地开发调试
-docker-compose build && docker-compose push # 推送镜像到腾讯云免费的个人镜像仓库中(需要先开通)
-```
 
 ## Installation
 
-#### Step 1: Setup XAEM
+#### Step 1: Prepare using conda
+```
+conda create -n iGTEx python=3.10 r=4.2 -c conda-forge
+conda activate iGTEx
+pip install pandas
+R -e "install.packages(c('foreach','doParallel'), repos='https://mirrors.tuna.tsinghua.edu.cn/CRAN/')"
+```
+
+#### Step 2: Setup tools
 Install the XAEM tool for this protocol via the bash command:
 ```
 git https://github.com/ZhengCQ/iGTEx.git
@@ -29,12 +30,6 @@ unzip iGTEx_XAEM_v0.1.2.zip
 ln -fs iGTEx-iGTEx_XAEM_v0.1.2 iGTEx_XAEM
 ```
 
-#### Step 2: Setup R dependencies
-In R, install the R dependencies via:
-```
-install.packages("foreach")
-install.packages("doParallel")
-```
 
 #### Step 3: Download the annotation reference
 Run the following commands to download the reference annotating the transcripts:
