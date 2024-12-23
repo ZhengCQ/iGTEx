@@ -19,11 +19,7 @@ R -e "install.packages(c('foreach','doParallel'), repos='https://mirrors.tuna.ts
 ```
 
 #### Step 2: Setup tools
-Install the XAEM tool for this protocol via the bash command:
-```
-git https://github.com/ZhengCQ/iGTEx.git
-```
-or 
+Install the iGTEx_XAEM tool for this protocol via the bash command:
 ```
 wget https://github.com/ZhengCQ/iGTEx/archive/refs/tags/iGTEx_XAEM_v0.1.2.zip
 unzip iGTEx_XAEM_v0.1.2.zip
