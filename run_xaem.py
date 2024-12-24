@@ -71,7 +71,12 @@ def read_sampleinfo(args):
             if line.strip() == '' or  line.startswith('#'):
                 continue
             sample, lib, fq1, fq2  = line.strip().split()[0:4]
-            sample_info.append([sample, lib, os.path.abspath(fq1), os.path.abspath(fq2)])
+            if not os.path.exists (fq1):
+                logging.error(f'{fq1} in {sample} not exists!!')
+            elif not os.path.exists (fq2):
+                logging.error(f'{fq2} in {sample} not exists!!')
+            else:
+                sample_info.append([sample, lib, os.path.abspath(fq1), os.path.abspath(fq2)])
     df = pd.DataFrame(sample_info,columns = ['sample','lib','fq1','fq2'])
     return df
 
